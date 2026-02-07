@@ -5,24 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our 6 Year Journey</title>
     <style>
-        body { font-family: 'Arial', sans-serif; background: #fff0f3; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; }
-        .card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2); text-align: center; max-width: 400px; width: 85%; z-index: 10; position: relative; }
-        .journey-text { color: #ff4d6d; font-weight: bold; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; }
-        h2 { color: #333; margin-top: 10px; }
-        .btn { background: #ff4d6d; color: white; border: none; padding: 15px 25px; border-radius: 30px; cursor: pointer; font-size: 16px; margin: 10px; width: 100%; transition: transform 0.2s ease; }
-        .btn:hover { background: #ff758f; }
+        /* General layout fixes */
+        body { 
+            font-family: 'Arial', sans-serif; 
+            background: #fff0f3; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+            overflow: hidden; /* Prevents scrollbars when button moves */
+        }
         
+        .card { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 20px; 
+            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2); 
+            text-align: center; 
+            max-width: 350px; 
+            width: 90%; 
+            z-index: 10; 
+            position: relative; 
+        }
+
+        .journey-text { color: #ff4d6d; font-weight: bold; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; }
+        h2 { color: #333; margin: 10px 0; font-size: 20px; }
+        
+        /* Button styling */
+        .btn { 
+            background: #ff4d6d; 
+            color: white; 
+            border: none; 
+            padding: 15px 20px; 
+            border-radius: 30px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            margin: 10px 0; 
+            width: 100%; 
+            transition: transform 0.2s ease; 
+        }
+
+        /* Fixed No Button - ensuring it stays on top */
         #noBtn { 
             background: #adb5bd; 
             width: auto; 
+            padding: 10px 20px;
             position: absolute; 
-            transition: all 0.2s ease;
+            transition: all 0.15s ease-out;
             white-space: nowrap;
+            z-index: 999;
         }
 
         .spin { animation: spinMe 0.5s linear infinite; }
         @keyframes spinMe { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
+        /* Image sizing fix */
+        img { 
+            border-radius: 15px; 
+            margin-bottom: 15px; 
+            width: 100%; 
+            height: auto; 
+            display: block;
+            object-fit: contain; /* Ensures the GIF isn't cropped */
+        }
+
+        /* Heart rain */
         .heart {
             position: absolute;
             color: #ff4d6d;
@@ -31,13 +79,10 @@
             animation: float 4s linear forwards;
             z-index: 1;
         }
-
         @keyframes float {
-            0% { transform: translateY(110vh) scale(1); opacity: 1; }
-            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+            0% { transform: translateY(110vh); opacity: 1; }
+            100% { transform: translateY(-10vh); opacity: 0; }
         }
-
-        img { border-radius: 15px; margin-bottom: 15px; max-width: 100%; height: auto; }
     </style>
 </head>
 <body>
@@ -56,12 +101,19 @@
     <script>
         function dodgeAndSpin() {
             const btn = document.getElementById('noBtn');
-            const x = Math.random() * (window.innerWidth - 150);
-            const y = Math.random() * (window.innerHeight - 150);
-            btn.style.left = x + 'px';
-            btn.style.top = y + 'px';
+            
+            // Calculate safe bounds (Viewport size - button size - padding)
+            const maxWidth = window.innerWidth - btn.offsetWidth - 20;
+            const maxHeight = window.innerHeight - btn.offsetHeight - 20;
+
+            const randomX = Math.max(10, Math.floor(Math.random() * maxWidth));
+            const randomY = Math.max(10, Math.floor(Math.random() * maxHeight));
+
+            btn.style.left = randomX + 'px';
+            btn.style.top = randomY + 'px';
             btn.classList.add('spin');
-            const texts = ["No", "Are you sure?", "Wait!", "Nope!", "Try again!"];
+            
+            const texts = ["No", "Are you sure?", "Wait!", "Nope!", "Click Yes!"];
             btn.innerText = texts[Math.floor(Math.random() * texts.length)];
         }
 
@@ -91,4 +143,4 @@
         }
     </script>
 </body>
-</html>   
+</html>
