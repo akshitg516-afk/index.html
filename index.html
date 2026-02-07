@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our 6 Year Journey</title>
     <style>
-        /* General layout fixes */
         body { 
             font-family: 'Arial', sans-serif; 
             background: #fff0f3; 
@@ -14,7 +13,7 @@
             align-items: center; 
             height: 100vh; 
             margin: 0; 
-            overflow: hidden; /* Prevents scrollbars when button moves */
+            overflow: hidden; 
         }
         
         .card { 
@@ -26,56 +25,52 @@
             max-width: 350px; 
             width: 90%; 
             z-index: 10; 
-            position: relative; 
         }
 
         .journey-text { color: #ff4d6d; font-weight: bold; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; }
         h2 { color: #333; margin: 10px 0; font-size: 20px; }
         
-        /* Button styling */
+        /* Container to keep buttons aligned initially */
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
         .btn { 
             background: #ff4d6d; 
             color: white; 
             border: none; 
-            padding: 15px 20px; 
+            padding: 12px 25px; 
             border-radius: 30px; 
             cursor: pointer; 
             font-size: 16px; 
-            margin: 10px 0; 
-            width: 100%; 
-            transition: transform 0.2s ease; 
+            transition: transform 0.2s; 
         }
 
-        /* Fixed No Button - ensuring it stays on top */
         #noBtn { 
             background: #adb5bd; 
-            width: auto; 
-            padding: 10px 20px;
-            position: absolute; 
-            transition: all 0.15s ease-out;
+            transition: all 0.2s ease;
             white-space: nowrap;
-            z-index: 999;
+            /* No absolute position initially! */
         }
 
         .spin { animation: spinMe 0.5s linear infinite; }
         @keyframes spinMe { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* Image sizing fix */
         img { 
             border-radius: 15px; 
             margin-bottom: 15px; 
             width: 100%; 
-            height: auto; 
-            display: block;
-            object-fit: contain; /* Ensures the GIF isn't cropped */
+            max-height: 200px;
+            object-fit: contain; 
         }
 
-        /* Heart rain */
         .heart {
             position: absolute;
             color: #ff4d6d;
             font-size: 20px;
-            user-select: none;
             animation: float 4s linear forwards;
             z-index: 1;
         }
@@ -93,8 +88,10 @@
             <img src="https://media.tenor.com/ICvS6X0mE_MAAAAi/peach-goma.gif" alt="Waiting...">
             <h2>6 years and counting...</h2>
             <h3>Will you be my Valentine? ❤️</h3>
-            <button class="btn" style="width: 150px;" onclick="success()">YES!</button>
-            <button class="btn" id="noBtn" onmouseover="dodgeAndSpin()">No</button>
+            <div class="btn-container">
+                <button class="btn" onclick="success()">YES!</button>
+                <button class="btn" id="noBtn" onmouseover="dodgeAndSpin()">No</button>
+            </div>
         </div>
     </div>
 
@@ -102,18 +99,23 @@
         function dodgeAndSpin() {
             const btn = document.getElementById('noBtn');
             
-            // Calculate safe bounds (Viewport size - button size - padding)
-            const maxWidth = window.innerWidth - btn.offsetWidth - 20;
-            const maxHeight = window.innerHeight - btn.offsetHeight - 20;
+            // Switch to absolute only when she tries to click it
+            btn.style.position = 'fixed'; 
 
-            const randomX = Math.max(10, Math.floor(Math.random() * maxWidth));
-            const randomY = Math.max(10, Math.floor(Math.random() * maxHeight));
+            // Calculate screen boundaries
+            const padding = 50; 
+            const maxWidth = window.innerWidth - btn.offsetWidth - padding;
+            const maxHeight = window.innerHeight - btn.offsetHeight - padding;
+
+            // Generate coordinates within the visible screen
+            const randomX = Math.floor(Math.random() * maxWidth) + (padding / 2);
+            const randomY = Math.floor(Math.random() * maxHeight) + (padding / 2);
 
             btn.style.left = randomX + 'px';
             btn.style.top = randomY + 'px';
             btn.classList.add('spin');
             
-            const texts = ["No", "Are you sure?", "Wait!", "Nope!", "Click Yes!"];
+            const texts = ["No", "Rude!", "Wait!", "Nope!", "Click Yes!"];
             btn.innerText = texts[Math.floor(Math.random() * texts.length)];
         }
 
