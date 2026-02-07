@@ -30,7 +30,6 @@
         .journey-text { color: #ff4d6d; font-weight: bold; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; }
         h2 { color: #333; margin: 10px 0; font-size: 20px; }
         
-        /* Container to keep buttons aligned initially */
         .btn-container {
             display: flex;
             justify-content: center;
@@ -53,7 +52,6 @@
             background: #adb5bd; 
             transition: all 0.2s ease;
             white-space: nowrap;
-            /* No absolute position initially! */
         }
 
         .spin { animation: spinMe 0.5s linear infinite; }
@@ -85,7 +83,7 @@
     <div id="main-content" style="display: contents;">
         <div id="proposal-box" class="card">
             <span class="journey-text">Since 2020 • 6 Beautiful Years</span>
-            <img src="https://media.tenor.com/ICvS6X0mE_MAAAAi/peach-goma.gif" alt="Waiting...">
+            <img src="bear.gif" alt="Cute Bear">
             <h2>6 years and counting...</h2>
             <h3>Will you be my Valentine? ❤️</h3>
             <div class="btn-container">
@@ -98,16 +96,12 @@
     <script>
         function dodgeAndSpin() {
             const btn = document.getElementById('noBtn');
-            
-            // Switch to absolute only when she tries to click it
             btn.style.position = 'fixed'; 
 
-            // Calculate screen boundaries
             const padding = 50; 
             const maxWidth = window.innerWidth - btn.offsetWidth - padding;
             const maxHeight = window.innerHeight - btn.offsetHeight - padding;
 
-            // Generate coordinates within the visible screen
             const randomX = Math.floor(Math.random() * maxWidth) + (padding / 2);
             const randomY = Math.floor(Math.random() * maxHeight) + (padding / 2);
 
@@ -115,7 +109,7 @@
             btn.style.top = randomY + 'px';
             btn.classList.add('spin');
             
-            const texts = ["No", "Rude!", "Wait!", "Nope!", "Click Yes!"];
+            const texts = ["No", "Rude!", "Wait!", "Nope!", "Try again!"];
             btn.innerText = texts[Math.floor(Math.random() * texts.length)];
         }
 
