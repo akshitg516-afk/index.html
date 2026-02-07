@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our 6 Year Journey</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; background: #fff0f3; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; }
+        .card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2); text-align: center; max-width: 400px; width: 85%; z-index: 10; }
+        .journey-text { color: #ff4d6d; font-weight: bold; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; }
+        h2 { color: #333; margin-top: 10px; }
+        .btn { background: #ff4d6d; color: white; border: none; padding: 15px 25px; border-radius: 30px; cursor: pointer; font-size: 16px; margin: 10px; width: 100%; transition: transform 0.2s ease; }
+        .btn:hover { background: #ff758f; }
+        
+        #noBtn { 
+            background: #adb5bd; 
+            width: auto; 
+            position: absolute; 
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .spin { animation: spinMe 0.5s linear infinite; }
+        @keyframes spinMe { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* Floating Hearts Animation */
+        .heart {
+            position: absolute;
+            color: #ff4d6d;
+            font-size: 20px;
+            user-select: none;
+            animation: float 3s linear forwards;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        img { border-radius: 15px; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+    <div id="proposal-box" class="card">
+        <span class="journey-text">Since 2020 • 6 Beautiful Years</span>
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/c76IJLufpNwSULPk77/giphy.gif" width="200">
+        <h2>6 years and counting...</h2>
+        <h3>Will you be my Valentine? ❤️</h3>
+        <button class="btn" style="width: 150px;" onclick="success()">YES!</button>
+        <button class="btn" id="noBtn" onmouseover="dodgeAndSpin()">No</button>
+    </div>
+
+    <script>
+        function dodgeAndSpin() {
+            const btn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - 150);
+            const y = Math.random() * (window.innerHeight - 150);
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+            btn.classList.add('spin');
+            const texts = ["No", "Are you sure?", "Wait!", "Nope!", "Click Yes!"];
+            btn.innerText = texts[Math.floor(Math.random() * texts.length)];
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+
+        function success() {
+            // Change background and start heart rain
+            document.body.style.background = "#ff4d6d";
+            setInterval(createHeart, 300);
+
+            // Change card content to hugging couple
+            document.body.innerHTML = `
+                <div class="card">
+                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/l41lTfuxV5yG5QY3C/giphy.gif" width="250">
+                    <h1 style="color: #ff4d6d;">YAY! 🥰❤️</h1>
+                    <p style="color: #333; font-weight: bold;">6 years down, a lifetime to go.</p>
+                    <p style="color: #333;">I love you more than anything!</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
